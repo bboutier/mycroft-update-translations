@@ -30,8 +30,8 @@ import shutil
 import polib
 
 MYCROFT_SKILLS_DIR = '/opt/mycroft/skills'
-MYCROFT_LOCALE = 'ca-es'
-POOTLE_LOCALE = 'ca'
+MYCROFT_LOCALE = 'fr-fr'
+POOTLE_LOCALE = 'fr'
 WORKING_DIR = './tmp/'
 POFILES_DIR = WORKING_DIR + POOTLE_LOCALE + '-mycroft-skills/' + POOTLE_LOCALE + '/mycroft-skills/'
 
@@ -62,29 +62,38 @@ def get_pofile(skill):
     po_filename = ''
 
     if skill_name == 'count.andlo':
-        po_basename = 'count-ca.po'
+        po_basename = 'count-fr.po'
+        po_filename = POFILES_DIR + po_basename
+
+    elif skill_name == 'wiktionary.tree-ind':
+        po_basename = 'Wiktionary-fr.po'
         po_filename = POFILES_DIR + po_basename
 
     elif skill_name == 'mycroft-spotify.forslund':
-        po_basename = 'spotify-skill-ca.po'
+        po_basename = 'spotify-skill-fr.po'
         po_filename = POFILES_DIR + po_basename
 
     elif skill_name == 'mycroft-timer.mycroftai':
-        po_basename = 'mycroft-timer-ca.po'
+        po_basename = 'mycroft-timer-fr.po'
         po_filename = POFILES_DIR + po_basename
 
     elif skill_name == 'mycroft-support-helper.mycroftai':
-        po_basename = 'skill-support-ca.po'
+        po_basename = 'skill-support-fr.po'
         po_filename = POFILES_DIR + po_basename
 
     elif skill_name[:8] == 'mycroft-' and skill_name[-10:] == '.mycroftai':
-        po_basename = 'skill-' + skill_name[8:-10] + '-ca.po'
+        po_basename = 'skill-' + skill_name[8:-10] + '-fr.po'
         po_filename = POFILES_DIR + po_basename
            
     elif skill_name[-10:] == '.mycroftai':
-        po_basename = skill_name[:-10] + '-ca.po'
+        po_basename = skill_name[:-10] + '-fr.po'
         po_filename = POFILES_DIR + po_basename
 
+    else: 
+        po_basename = skill_name.split('.')[0] + '-fr.po'
+        po_filename = POFILES_DIR + po_basename
+
+    print ("### skill " + skill_name + ", pofile: " + po_basename)
     if po_filename in List_of_pofiles:
         return(po_filename)
 
@@ -148,6 +157,9 @@ def get_translations(pofile):
         references = parse_references(references)
 
         for reference in references.split('\n'):
+            if '/' not in reference:
+                continue
+
             targetfile = (reference.split(':')[0]).split('/')[1]
             if targetfile not in targetfiles:
                 targetfiles[targetfile] = []
@@ -244,5 +256,5 @@ for skill in List_of_skills:
                remove_old_translations(skill + '/' + subdir)
                write_nonlocale_translations(skill, subdir, translations)
        else:
-           print('Unable to find a po file matching for \'' + skill +'\'')
+           print('##### Unable to find a po file matching for \'' + skill +'\'')
 
