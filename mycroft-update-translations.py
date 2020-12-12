@@ -65,6 +65,10 @@ def get_pofile(skill):
         po_basename = 'count-fr.po'
         po_filename = POFILES_DIR + po_basename
 
+    elif skill_name == 'skill-the-cows-lists.carstenagerskov':
+        po_basename = 'carstena-the-cows-lists-fr.po'
+        po_filename = POFILES_DIR + po_basename
+
     elif skill_name == 'wiktionary.tree-ind':
         po_basename = 'Wiktionary-fr.po'
         po_filename = POFILES_DIR + po_basename
@@ -201,6 +205,7 @@ def write_nonlocale_translations(path, subdir, translations):
            (subdir =='vocab' and extension == 'intent') or
            (subdir =='vocab' and extension == 'entity') or
            (subdir =='regex' and extension == 'rx') or
+           (subdir =='regex' and extension == 'json') or
            (subdir =='dialog' and extension == 'value') or
            (subdir =='dialog' and extension == 'template') or
            (subdir =='dialog' and extension == 'list')):
